@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET, "/books/**").hasRole("USER")
 			.antMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")
 			.antMatchers(HttpMethod.PUT, "/books/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.DELETE, "/books/**").hasRole("ADMIN")
 //			TODO  create path for POST, PUT, DELETE...
 			.and()
 			.csrf().disable().formLogin().disable();

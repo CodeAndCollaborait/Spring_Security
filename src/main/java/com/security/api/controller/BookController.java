@@ -37,16 +37,27 @@ public class BookController {
   
   @PutMapping("/books/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
-  public Book updateBookDetails(@RequestBody Book book, @PathVariable(value = "id") long id) throws Exception {
+  public Book updateBookDetails(@RequestBody Book updatedBook, @PathVariable(value = "id") long id) throws Exception {
 	
-	return bookRepository.findById(id)
-			.map(update -> {
-			  update.setName(book.getName());
-			  update.setAuthor(book.getAuthor());
-			  update.setPrice(book.getPrice());
-			  return bookRepository.save(book);
-			}).orElseThrow(() -> new Exception("Book not found by id"));
+	Book book = bookRepository.findById(id)
+			.orElseThrow(() -> new Exception("Book not found in with ID" + id));
+	
+	book.setName(updatedBook.getName());
+	book.setAuthor(updatedBook.getAuthor());
+	book.setPrice(updatedBook.getPrice());
+	
+	final Book book1 = bookRepository.save(book);
+	return updatedBook;
+	
   }
   
+  
+  @DeleteMapping("/books/{id}")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public void deleteBook(@PathVariable(value = "id") long id) throws Exception {
+	Book book = bookRepository.findById(id).orElseThrow(() -> new Exception("book not found by id: " + id));
+	
+	bookRepository.delete(book);
+  }
   
 }

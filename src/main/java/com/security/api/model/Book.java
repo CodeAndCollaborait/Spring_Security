@@ -9,10 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
-@NoArgsConstructor
-@Getter
-@Setter
-@ToString
+
 public class Book {
   
   @Id
@@ -27,6 +24,16 @@ public class Book {
   
   @Column(nullable = false)
   private double price;
+  
+  public Book() {
+  }
+  
+  public Book(long id, String name, String author, double price) {
+    this.id = id;
+    this.name = name;
+    this.author = author;
+    this.price = price;
+  }
   
   public long getId() {
     return id;
